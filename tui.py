@@ -138,7 +138,7 @@ def sub_menu(variant=0):
         
     elif(variant==2):
         print("'[1] Positive/Negative Pie Chart', '[2] Reviews Per Nationality Chart', '[3] Animated Summary'")
-        input(int(opt))
+        opt = int(input())
         if(opt==1):
             print("pie chart runs")
             return opt
@@ -150,7 +150,7 @@ def sub_menu(variant=0):
             return opt
     elif(variant==3):
         print("'[1] All Reviews', '[2] Reviews for Specific Hotel'")
-        input(int(opt))
+        opt = int(input())
         if(opt==1):
             print("All Reviews")
             return opt

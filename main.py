@@ -12,6 +12,7 @@ from lib2to3.pgen2.parse import ParseError
 import tui
 import pandas as pd
 import process
+import visual
 import tabulate
 # Task 11: Import required modules and create an empty list named 'reviews_data'.
 # This will be used to store the data read from the source data file.
@@ -20,8 +21,8 @@ reviews_data = []
 
 
 def run():
-    pd.set_option('max_colwidth', 800)
-    pd.set_option('display.expand_frame_repr', False)
+    # pd.set_option('max_colwidth', 800)
+    # pd.set_option('display.expand_frame_repr', False)
     # Task 12: Call the function welcome of the module 'tui'.
     # This will display our welcome message when the program is executed.
     # TODO: Your code here
@@ -105,76 +106,100 @@ def run():
         #       - Use the appropriate function in the module 'tui' to indicate that the reviews retrieval
         #       process has completed.
         #
-        if (sub_opt == 2):
-                 #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has started
-            tui.progress("Review Dates", 0)
+            if (sub_opt == 2):
+                    #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has started
+                tui.progress("Review Dates", 0)
 
-            #        - Use the appropriate function in the module 'process' to retrieve the review and then appropriately
+                #        - Use the appropriate function in the module 'process' to retrieve the review and then appropriately
 
-            d = tui.review_dates()
-            for date in d:
-                tui.display_review(process.HotelReviewsByDate(
-                    df, date).values.tolist(), None)
+                d = tui.review_dates()
+                for date in d:
+                    print(process.HotelReviewsByDate(
+                        df, date).to_markdown())
 
-        #       display it.
-        #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has
-        #       completed.
+            #       display it.
+            #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has
+            #       completed.
 
-            tui.progress("Reivew Dates", 100)
+                tui.progress("Reivew Dates", 100)
 
-        #   - If the user selected the option to group reviews by nationality then
-        #       - Use the appropriate function in the module 'tui' to indicate that the grouping
-        #       process has started.
-        #       - Use the appropriate function in the module 'process' to group the reviews
-        #       - Use the appropriate function in the module 'tui' to display the groupings.
-        #       - If required, you may add a suitable function to the module 'tui' to display the groupings
-        #       - Use the appropriate function in the module 'tui' to indicate that the grouping
-        #       process has completed.
+            #   - If the user selected the option to group reviews by nationality then
+            #       - Use the appropriate function in the module 'tui' to indicate that the grouping
+            #       process has started.
+            #       - Use the appropriate function in the module 'process' to group the reviews
+            #       - Use the appropriate function in the module 'tui' to display the groupings.
+            #       - If required, you may add a suitable function to the module 'tui' to display the groupings
+            #       - Use the appropriate function in the module 'tui' to indicate that the grouping
+            #       process has completed.
 
-        if (sub_opt == 3):
-                 #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has started
-            tui.progress("Review Nationality", 0)
+            if (sub_opt == 3):
+                    #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has started
+                tui.progress("Review Nationality", 0)
 
-            #        - Use the appropriate function in the module 'process' to retrieve the review and then appropriately
+                #        - Use the appropriate function in the module 'process' to retrieve the review and then appropriately
 
-           
-            print(process.grpbyReviewsNationatlity(df).to_markdown())
-
-        #       display it.
-        #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has
-        #       completed.
-
-            tui.progress("Reivew Nationality", 100)
-
-        #
-        #   - If the user selected the option to summarise the reviews then
-        #       - Use the appropriate function in the module 'tui' to indicate that the summary
-        #       process has started.
-        #       - Use the appropriate function in the module 'process' to summarise the reviews.
-        #       - Add a suitable function to the module 'tui' to display the summary
-        #       - Use your function in the module 'tui' to display the summary
-        #       - Use the appropriate function in the module 'tui' to indicate that the summary
-        #       process has completed.
-        
-        if (sub_opt == 4):
-                 #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has started
-            tui.progress("Review Summary", 0)
-
-            #        - Use the appropriate function in the module 'process' to retrieve the review and then appropriately
-
-           
-            print(process.summarizeData(df).to_markdown())
-
-        #       display it.
-        #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has
-        #       completed.
-
-            tui.progress("Reivew Summary", 100)
             
-        tui.progress("Review Processing", 100)
+                print(process.grpbyReviewsNationatlity(df))
+
+            #       display it.
+            #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has
+            #       completed.
+
+                tui.progress("Reivew Nationality", 100)
+
+            #
+            #   - If the user selected the option to summarise the reviews then
+            #       - Use the appropriate function in the module 'tui' to indicate that the summary
+            #       process has started.
+            #       - Use the appropriate function in the module 'process' to summarise the reviews.
+            #       - Add a suitable function to the module 'tui' to display the summary
+            #       - Use your function in the module 'tui' to display the summary
+            #       - Use the appropriate function in the module 'tui' to indicate that the summary
+            #       process has completed.
             
+            if (sub_opt == 4):
+                    #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has started
+                tui.progress("Review Summary", 0)
+
+                #        - Use the appropriate function in the module 'process' to retrieve the review and then appropriately
+
+            
+                print(process.summarizeData(df).to_markdown())
+
+            #       display it.
+            #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has
+            #       completed.
+
+                tui.progress("Reivew Summary", 100)
+                
+            tui.progress("Review Processing", 100)
+    
         # TODO: Your code here
-
+        elif opt == 2:
+            
+            tui.progress("Data Visualization", 0)
+            sub_opt = tui.sub_menu(2)
+            
+            
+            
+            if (sub_opt == 1):
+                
+                tui.progress("Positive Negative Pie Chart", 0)
+                name = tui.hotel_name()
+                visual.hotelReviewInPieChart(df,name)
+                
+                tui.progress("Positive Negative Pie Chart", 100)
+                
+            elif (sub_opt == 2):
+                
+                tui.progress("Nationality Graph", 0)
+                visual.NationalityGraph(df)
+                
+                tui.progress("Nationality Graph", 100)
+                
+            tui.progress("Data Visualization", 100)
+            
+            
         # Task 21: Check if the user selected the option for visualising data.
         # If so, then do the following:
         # - Use the appropriate function in the module 'tui' to indicate that the data visualisation operation
