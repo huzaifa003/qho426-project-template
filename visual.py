@@ -49,3 +49,36 @@ def NationalityGraph(df):
     plt.xlabel('Nationality of Reviewer')
     plt.ylabel('Number of Reviews')
     plt.show()
+
+
+def anim(df):
+    df['Review_Date'] = pd.to_datetime(df['Review_Date'])
+    fig, ax = plt.subplots(figsize=(8, 6))
+
+    def animate(i):
+        start_date = pd.Timestamp('2015-07-01') + pd.DateOffset(months=i)
+        end_date = start_date + pd.DateOffset(months=1)
+        data = df[(df['Review_Date'] >= start_date) & (df['Review_Date'] < end_date)]
+        totalNegRev = data[data['Negative_Review']!="No Negative"]['Negative_Review'].count()
+        totalPosRev = data[data['Positive_Review']!="No Positive"]['Positive_Review'].count()
+        avg_rating = data['Reviewer_Score'].mean()
+        ax.clear()
+        ax.set_title(f"Hotel Reviews from {start_date.date()} to {end_date.date()}")
+        ax.set_xlabel("Review Type")
+        ax.set_ylabel("Number of Reviews / Average Rating")
+        ax.bar(["Positive", "Negative"], [totalPosRev, totalNegRev], color=["green", "red"])
+        ax.set_ylim(0, data.shape[0])
+        ax.legend(labels=['Positive Review', 'Negative Review'], loc='best')
+        ax2 = ax.twinx()
+        # ax2.plot(["Average Rating"], [avg_rating], marker="o", markersize=8, color="blue")
+        ax2.set_ylim(df['Reviewer_Score'].min()-0.5, df['Reviewer_Score'].max()+0.5)
+        ax2.set_ylabel("Average Rating")
+
+
+    def callAnimation():
+
+        anim = animation.FuncAnimation(fig, animate, frames=24)
+        anim.save('hotel_reviews_animation.mp4', fps=2, extra_args=['-vcodec', 'libx264'])
+        plt.show()
+        
+    callAnimation()

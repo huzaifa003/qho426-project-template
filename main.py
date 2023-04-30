@@ -14,6 +14,7 @@ import pandas as pd
 import process
 import visual
 import tabulate
+
 # Task 11: Import required modules and create an empty list named 'reviews_data'.
 # This will be used to store the data read from the source data file.
 # TODO: Your code here
@@ -196,7 +197,12 @@ def run():
                 visual.NationalityGraph(df)
                 
                 tui.progress("Nationality Graph", 100)
+            
+            elif (sub_opt == 3):
+                tui.progress("Animation", 0)
                 
+                visual.anim(df)
+                tui.progress("Animation", 100)
             tui.progress("Data Visualization", 100)
             
             
