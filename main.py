@@ -14,7 +14,7 @@ import pandas as pd
 import process
 import visual
 import tabulate
-
+import export
 # Task 11: Import required modules and create an empty list named 'reviews_data'.
 # This will be used to store the data read from the source data file.
 # TODO: Your code here
@@ -33,6 +33,8 @@ def run():
     # - Use the appropriate function in the module 'tui' to display a message to indicate that the data loading
     # operation has started.
     tui.progress("Loading Data", 0)
+    
+    
     try:
         # - Load the data. Each line in the file should represent a review in the list 'reviews_data'.
         reviews_data = pd.read_csv("./data/hotel_reviews.csv")
@@ -48,6 +50,7 @@ def run():
         tui.error("ERROR IN GETTING FILE")
         return
 
+    
     # - Use the appropriate functions in the module 'tui' to display a message to indicate how many reviews have
     tui.total_reviews(process.Count_All_Reviews(df))
 
@@ -61,8 +64,7 @@ def run():
         # Assign the value returned from calling the function to a suitable local variable
 
         opt = tui.main_menu()
-        if (opt == 4):
-            break
+
 
         # TODO: Your code here
 
@@ -107,7 +109,7 @@ def run():
         #       - Use the appropriate function in the module 'tui' to indicate that the reviews retrieval
         #       process has completed.
         #
-            if (sub_opt == 2):
+            elif (sub_opt == 2):
                     #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has started
                 tui.progress("Review Dates", 0)
 
@@ -133,7 +135,7 @@ def run():
             #       - Use the appropriate function in the module 'tui' to indicate that the grouping
             #       process has completed.
 
-            if (sub_opt == 3):
+            elif (sub_opt == 3):
                     #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has started
                 tui.progress("Review Nationality", 0)
 
@@ -158,7 +160,7 @@ def run():
             #       - Use the appropriate function in the module 'tui' to indicate that the summary
             #       process has completed.
             
-            if (sub_opt == 4):
+            elif (sub_opt == 4):
                     #       - Use the appropriate function in the module 'tui' to indicate that the review retrieval process has started
                 tui.progress("Review Summary", 0)
 
@@ -173,7 +175,11 @@ def run():
 
                 tui.progress("Reivew Summary", 100)
                 
+            else:
+                tui.error("Invalid Input")
+                
             tui.progress("Review Processing", 100)
+            
     
         # TODO: Your code here
         elif opt == 2:
@@ -203,6 +209,9 @@ def run():
                 
                 visual.anim(df)
                 tui.progress("Animation", 100)
+                
+            else:
+                tui.error("Invalid Input")
             tui.progress("Data Visualization", 100)
             
             
@@ -216,7 +225,28 @@ def run():
         # - Use the appropriate function in the module 'tui' to display a message to indicate that the
         # data visualisation operation has completed.
         # TODO: Your code here
-
+        
+        elif opt == 3:
+            tui.progress("Export Data",0)
+            export_data = export.selectedReviews(df)
+    
+            sub_opt = tui.sub_menu(3)
+            if sub_opt == 1:
+                tui.progress("All_Reviews.json Export",0)
+                export_data.getAllReviews()
+                tui.progress("All_Reviews.json Export",100)
+            elif sub_opt == 2:
+                name = tui.hotel_name()
+                tui.progress(name + "_Reviews.json Export",0)
+                export_data.getByHotel(name)
+                tui.progress(name + "_Reviews.json Export",100)
+                
+            else:
+                tui.error("Invalid Input")
+                
+                
+                    
+            tui.progress("Export Data",100)
         # Task 25: Check if the user selected the option for exporting reviews.  If so, then do the following:
         # - Use the appropriate function in the module 'tui' to retrieve what reviews are to be exported.
         # - Check what option has been selected
@@ -234,10 +264,13 @@ def run():
         # If so, then break out of the loop
         # TODO: Your code here
 
+        elif (opt == 4):
+            break
         # Task 27: If the user selected an invalid option then use the appropriate function of the
         # module tui to display an error message
         # TODO: Your code here
-
+        else:
+            tui.error("Wrong Option")
         pass  # can remove
 
 
